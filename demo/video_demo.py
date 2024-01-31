@@ -6,6 +6,7 @@ import mmcv
 from mmcv.transforms import Compose
 from mmengine.utils import track_iter_progress
 from loguru import logger
+from pathlib import Path
 
 from mmdet.apis import inference_detector, init_detector
 from mmdet.registry import VISUALIZERS
