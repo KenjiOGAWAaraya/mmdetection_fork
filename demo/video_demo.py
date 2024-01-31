@@ -66,13 +66,16 @@ def main():
         logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
         result = result.cpu()
+        pred_instances = result
+        pred_score_thr = 0.3
+        pred_instances = pred_instances[pred_instances.scores > pred_score_thr]
         logger.debug("inference: end")
-        df = pd.DataFrame({"score": result.scores,
-                           "y0": result.bboxes[:,1],
-                           "y0": result.bboxes[:,1],
-                           "x1": result.bboxes[:,2],
-                           "y1": result.bboxes[:,3],
-                           "category_id": result.label,})
+        df = pd.DataFrame({"score": pred_instances.scores,
+                           "y0": pred_instances.bboxes[:,0],
+                           "y0": pred_instances.bboxes[:,1],
+                           "x1": pred_instances.bboxes[:,2],
+                           "y1": pred_instances.bboxes[:,3],
+                           "category_id": pred_instances.label,})
         df["frame_count"] = frame_count
 
         datas.append(df)
