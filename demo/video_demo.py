@@ -65,10 +65,17 @@ def main():
             return
         logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
+        result = result.cpu()
         logger.debug("inference: end")
+        df = pd.DataFrame({"score": result.scores,
+                           "y0": result.bboxes[:,1],
+                           "y0": result.bboxes[:,1],
+                           "x1": result.bboxes[:,2],
+                           "y1": result.bboxes[:,3],
+                           "category_id": result.label,})
+        df["frame_count"] = frame_count
 
-        print(result.pred_instances)
-        datas.append(result.pred_instances)
+        datas.append(df)
 
         visualizer.add_datasample(
             name='video',
