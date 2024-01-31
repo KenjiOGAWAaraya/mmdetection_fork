@@ -62,7 +62,7 @@ def main():
     max_frame_count = 10
     for frame_count, frame in enumerate(video_reader):
         if frame_count > max_frame_count:
-            return
+            break
         logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
         result = result.cpu()
