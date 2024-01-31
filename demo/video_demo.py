@@ -75,7 +75,7 @@ def main():
                            "y0": pred_instances.bboxes[:,1],
                            "x1": pred_instances.bboxes[:,2],
                            "y1": pred_instances.bboxes[:,3],
-                           "category_id": pred_instances.label,})
+                           "category_id": pred_instances.labels,})
         df["frame_count"] = frame_count
 
         datas.append(df)
