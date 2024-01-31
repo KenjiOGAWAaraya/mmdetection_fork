@@ -186,7 +186,9 @@ def inference_detector(
 
         # forward the model
         with torch.no_grad():
+            logger.debug("model.test_step start")
             results = model.test_step(data_)[0]
+            logger.debug("model.test_step end")
 
         result_list.append(results)
 
