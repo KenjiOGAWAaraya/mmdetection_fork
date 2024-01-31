@@ -57,9 +57,18 @@ def main():
         video_writer = cv2.VideoWriter(
             args.out, fourcc, video_reader.fps,
             (video_reader.width, video_reader.height))
-
-    for frame in track_iter_progress(video_reader):
+    datas = []
+    max_frame_count = 10
+    for frame_count, frame in enumerate(video_reader):
+        if frame_count > max_frame_count:
+            return
+        logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
+        logger.debug("inference: end")
+
+        print(data_sample.pred_instances)
+        datas.append(data_sample.pred_instances)
+
         visualizer.add_datasample(
             name='video',
             image=frame,
