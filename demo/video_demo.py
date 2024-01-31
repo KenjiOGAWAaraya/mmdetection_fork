@@ -77,6 +77,7 @@ def main():
                            "y1": pred_instances.bboxes[:,3],
                            "category_id": pred_instances.labels,})
         df["frame_count"] = frame_count
+        df["filename"] = Path(videofile).stem
 
         datas.append(df)
 
