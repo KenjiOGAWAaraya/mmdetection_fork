@@ -67,8 +67,8 @@ def main():
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
         logger.debug("inference: end")
 
-        print(data_sample.pred_instances)
-        datas.append(data_sample.pred_instances)
+        print(result.pred_instances)
+        datas.append(result.pred_instances)
 
         visualizer.add_datasample(
             name='video',
