@@ -66,7 +66,7 @@ def main():
         logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
         result = result.cpu()
-        pred_instances = result
+        pred_instances = result.pred_instances
         pred_score_thr = 0.3
         pred_instances = pred_instances[pred_instances.scores > pred_score_thr]
         logger.debug("inference: end")
