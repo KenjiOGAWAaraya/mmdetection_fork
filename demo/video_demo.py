@@ -54,9 +54,10 @@ def main():
     video_reader = mmcv.VideoReader(args.video)
     video_writer = None
     if args.out:
+        outputfilename = "pred-output/movie/pred-{}.mp4".format(Path(videofile).stem)
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         video_writer = cv2.VideoWriter(
-            args.out, fourcc, video_reader.fps,
+            outputfilename, fourcc, video_reader.fps,
             (video_reader.width, video_reader.height))
     datas = []
     max_frame_count = 10
@@ -100,7 +101,7 @@ def main():
         video_writer.release()
     cv2.destroyAllWindows()
     df_all = pd.concat(datas)
-    csvfilename = "pred-{}.csv".format(Path(videofile).stem)
+    csvfilename = "pred-output/csv/pred-{}.csv".format(Path(videofile).stem)
     df_all.to_csv(csvfilename)
 
 
