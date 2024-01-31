@@ -7,6 +7,7 @@ from mmcv.transforms import Compose
 from mmengine.utils import track_iter_progress
 from loguru import logger
 from pathlib import Path
+import numpy as np
 
 from mmdet.apis import inference_detector, init_detector
 from mmdet.registry import VISUALIZERS
@@ -61,10 +62,13 @@ def main():
             outputfilename, fourcc, video_reader.fps,
             (video_reader.width, video_reader.height))
     datas = []
-    max_frame_count = 10
+    max_frame_count = np.infty
     for frame_count, frame in enumerate(video_reader):
+        logger.debug("frame_count {:d}".format(frame_count))
         if frame_count > max_frame_count:
             break
+        if (frame_count % 3) != 0:
+            continue
         logger.debug("inference: start")
         result = inference_detector(model, frame, test_pipeline=test_pipeline)
         result = result.cpu()
