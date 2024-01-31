@@ -50,7 +50,7 @@ def main():
     # the dataset_meta is loaded from the checkpoint and
     # then pass to the model in init_detector
     visualizer.dataset_meta = model.dataset_meta
-
+    videofile = args.video
     video_reader = mmcv.VideoReader(args.video)
     video_writer = None
     if args.out:
@@ -98,6 +98,9 @@ def main():
     if video_writer:
         video_writer.release()
     cv2.destroyAllWindows()
+    df_all = pd.concat(datas)
+    csvfilename = "pred-{}.csv".format(Path(videofile).stem)
+    df_all.to_csv(csvfilename)
 
 
 if __name__ == '__main__':
